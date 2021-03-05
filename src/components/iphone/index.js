@@ -28,7 +28,7 @@ export default class Iphone extends Component {
 			url: url,
 			dataType: "jsonp",
 			success : this.parseResponse,
-			error : function(req, err){ console.log('API cal failed ' + err); }
+			error : function(req, err){ console.log('API call failed ' + err); }
 		})
 		// once the data grabbed, hide the button
 		this.setState({ display: false });
