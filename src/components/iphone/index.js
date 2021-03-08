@@ -32,25 +32,26 @@ export default class Iphone extends Component {
 			error : function(req, err){ console.log('API call failed ' + err); }
 		})
 		// once the data grabbed, hide the button
-		this.setState({ display: false });
+		this.setState({ homeDisplay: false });
 	}
 	
 	ShowWindData = () => {
 		this.setState({ homeDisplay: false });
-		this.setState({contextHeader: "Wind data"})
+		this.setState({contextHeader: "Wind data"});
 	}
 	ShowPrecipitationData = () => {
 		this.setState({ homeDisplay: false });
-		this.setState({contextHeader: "Precipitation data"})
+		this.setState({contextHeader: "Precipitation data"});
 	}
 	ShowTemperatureData = () => {
 		this.setState({ homeDisplay: false });
-		this.setState({contextHeader: "Temperature data"})
+		this.setState({contextHeader: "Temperature data"});
 	}
 
 	ShowHome = () => {
 		this.setState({ homeDisplay: true });
-		this.setState({contextHeader : ""})
+		this.setState({contextHeader : ""});
+		this.setstate({temp : ""});
 	}
 
 	// the main render method for the iphone component
@@ -62,10 +63,10 @@ export default class Iphone extends Component {
 		return (
 			<div class={ style.container }>
 				<div class={ style.header }>
-					<div class = {style.contextHeader}>{this.state.contextHeader}</div>
-					<div class={ style.city }>{ this.state.locate }</div>
-					<div class={ style.conditions }>{ this.state.cond }</div>
-					<span class={ tempStyles }>{ this.state.temp }</span>
+					<div class = {style.contextHeader}> { this.state.homeDisplay ? null : this.state.contextHeader } </div>
+					<div class={ style.city }>{ this.state.homeDisplay ? null : this.state.locate }</div>
+					<div class={ style.conditions }>{ this.state.homeDisplay ? null : this.state.cond }</div>
+					<span class={ tempStyles }>{ this.state.homeDisplay ? null :this.state.temp }</span>
 				</div>
 				<div class={ style.details }></div>
 				<div class= { style_iphone.container }> 
@@ -77,7 +78,7 @@ export default class Iphone extends Component {
 				<div class= { style_iphone.container }> 
 				{ this.state.homeDisplay ? <Button class={ style_iphone.button } clickFunction={ this.ShowTemperatureData } message={"Temperature"}/ > : null }
 				</div>
-				<div class={ style_iphone.container}>
+				<div class={ style_iphone.hcontainer}>
 					{ this.state.homeDisplay ? null : <Button class={ style_iphone.button } clickFunction={ this.ShowHome } message={"Home"}/ >  }
 				</div>
 			</div>
