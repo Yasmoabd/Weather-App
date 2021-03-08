@@ -17,14 +17,14 @@ export default class Iphone extends Component {
 		// temperature state
 		this.state.temp = "";
 		// button display state
-		this.setState({ display: true });
-		this.state.contextHeader = "";
+		this.setState({ homeDisplay: true });
+		this.state.contextHeader = ""; 
 	}
 
 	// a call to fetch weather data via wunderground
 	fetchWeatherData = () => {
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
-		var url = "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=cf17e23b1d108b29a4d738d2084baf5";
+		var url = "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=4b59a3b6865564fefacb549fcbce29e2";
 		$.ajax({
 			url: url,
 			dataType: "jsonp",
@@ -36,20 +36,20 @@ export default class Iphone extends Component {
 	}
 	
 	ShowWindData = () => {
-		this.setState({ display: false });
+		this.setState({ homeDisplay: false });
 		this.setState({contextHeader: "Wind data"})
 	}
 	ShowPrecipitationData = () => {
-		this.setState({ display: false });
+		this.setState({ homeDisplay: false });
 		this.setState({contextHeader: "Precipitation data"})
 	}
 	ShowTemperatureData = () => {
-		this.setState({ display: false });
+		this.setState({ homeDisplay: false });
 		this.setState({contextHeader: "Temperature data"})
 	}
 
 	ShowHome = () => {
-		this.setState({ display: true });
+		this.setState({ homeDisplay: true });
 		this.setState({contextHeader : ""})
 	}
 
@@ -69,16 +69,16 @@ export default class Iphone extends Component {
 				</div>
 				<div class={ style.details }></div>
 				<div class= { style_iphone.container }> 
-					{ this.state.display ? <Button class={ style_iphone.button } clickFunction={ this.ShowWindData } message={"Wind"}/ > : null }
+					{ this.state.homeDisplay ? <Button class={ style_iphone.button } clickFunction={ this.ShowWindData } message={"Wind"}/ > : null }
 				</div>
 				<div class= { style_iphone.container }> 
-					{ this.state.display ? <Button class={ style_iphone.button } clickFunction={ this.ShowPrecipitationData } message={"Precipitation"}/ > : null }
+					{ this.state.homeDisplay ? <Button class={ style_iphone.button } clickFunction={ this.ShowPrecipitationData } message={"Precipitation"}/ > : null }
 				</div>
 				<div class= { style_iphone.container }> 
-				{ this.state.display ? <Button class={ style_iphone.button } clickFunction={ this.ShowTemperatureData } message={"Temperature"}/ > : null }
+				{ this.state.homeDisplay ? <Button class={ style_iphone.button } clickFunction={ this.ShowTemperatureData } message={"Temperature"}/ > : null }
 				</div>
 				<div class={ style_iphone.container}>
-					{ this.state.display ? null : <Button class={ style_iphone.button } clickFunction={ this.ShowHome } message={"Home"}/ >  }
+					{ this.state.homeDisplay ? null : <Button class={ style_iphone.button } clickFunction={ this.ShowHome } message={"Home"}/ >  }
 				</div>
 			</div>
 		);
