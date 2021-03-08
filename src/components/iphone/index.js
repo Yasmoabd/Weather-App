@@ -18,6 +18,7 @@ export default class Iphone extends Component {
 		this.state.temp = "";
 		// button display state
 		this.setState({ display: true });
+		this.state.contextHeader = "";
 	}
 
 	// a call to fetch weather data via wunderground
@@ -33,6 +34,24 @@ export default class Iphone extends Component {
 		// once the data grabbed, hide the button
 		this.setState({ display: false });
 	}
+	
+	ShowWindData = () => {
+		this.setState({ display: false });
+		this.setState({contextHeader: "Wind data"})
+	}
+	ShowPrecipitationData = () => {
+		this.setState({ display: false });
+		this.setState({contextHeader: "Precipitation data"})
+	}
+	ShowTemperatureData = () => {
+		this.setState({ display: false });
+		this.setState({contextHeader: "Temperature data"})
+	}
+
+	ShowHome = () => {
+		this.setState({ display: true });
+		this.setState({contextHeader : ""})
+	}
 
 	// the main render method for the iphone component
 	render() {
@@ -43,13 +62,23 @@ export default class Iphone extends Component {
 		return (
 			<div class={ style.container }>
 				<div class={ style.header }>
+					<div class = {style.contextHeader}>{this.state.contextHeader}</div>
 					<div class={ style.city }>{ this.state.locate }</div>
 					<div class={ style.conditions }>{ this.state.cond }</div>
 					<span class={ tempStyles }>{ this.state.temp }</span>
 				</div>
 				<div class={ style.details }></div>
 				<div class= { style_iphone.container }> 
-					{ this.state.display ? <Button class={ style_iphone.button } clickFunction={ this.fetchWeatherData }/ > : null }
+					{ this.state.display ? <Button class={ style_iphone.button } clickFunction={ this.ShowWindData } message={"Wind"}/ > : null }
+				</div>
+				<div class= { style_iphone.container }> 
+					{ this.state.display ? <Button class={ style_iphone.button } clickFunction={ this.ShowPrecipitationData } message={"Precipitation"}/ > : null }
+				</div>
+				<div class= { style_iphone.container }> 
+				{ this.state.display ? <Button class={ style_iphone.button } clickFunction={ this.ShowTemperatureData } message={"Temperature"}/ > : null }
+				</div>
+				<div class={ style_iphone.container}>
+					{ this.state.display ? null : <Button class={ style_iphone.button } clickFunction={ this.ShowHome } message={"Home"}/ >  }
 				</div>
 			</div>
 		);
@@ -68,3 +97,4 @@ export default class Iphone extends Component {
 		});      
 	}
 }
+
