@@ -6,7 +6,7 @@ export default class Button extends Component {
 	// rendering a function when the button is clicked
 	render() {
 		let cFunction = this.props.clickFunction;
-		let text = this.props.message
+		let text = this.props.message;
 		if(typeof cFunction !== 'function'){
 			cFunction = () => {
 				console.log("passed something as 'clickFunction' that wasn't a function !");

@@ -7,6 +7,11 @@ import style_iphone from '../button/style_iphone';
 import $ from 'jquery';
 // import the Button component
 import Button from '../button';
+import Datatable from './datatable';
+import Title from './title';
+
+
+
 
 export default class Iphone extends Component {
 //var Iphone = React.createClass({
@@ -18,7 +23,8 @@ export default class Iphone extends Component {
 		this.state.temp = "";
 		// button display state
 		this.setState({ homeDisplay: true });
-		this.state.contextHeader = ""; 
+		this.state.contextHeader = "Mountain Weather App";
+		this.state.selection = ""; 
 	}
 
 	// a call to fetch weather data via wunderground
@@ -38,19 +44,22 @@ export default class Iphone extends Component {
 	ShowWindData = () => {
 		this.setState({ homeDisplay: false });
 		this.setState({contextHeader: "Wind data"});
+		this.setState({selection: "wind"});
 	}
 	ShowPrecipitationData = () => {
 		this.setState({ homeDisplay: false });
 		this.setState({contextHeader: "Precipitation data"});
+		this.setState({selection: "prec"});
 	}
 	ShowTemperatureData = () => {
 		this.setState({ homeDisplay: false });
 		this.setState({contextHeader: "Temperature data"});
+		this.setState({selection: "temp"});
 	}
 
 	ShowHome = () => {
 		this.setState({ homeDisplay: true });
-		this.setState({contextHeader : ""});
+		this.setState({contextHeader : "Mountain Weather App"});
 		this.setstate({temp : ""});
 	}
 
@@ -62,36 +71,15 @@ export default class Iphone extends Component {
 		// display all weather data
 		return (
 			<div class={ style.container }>
-				<div class={ style.header }>
-					<div class = {style.contextHeader}> { this.state.homeDisplay ? null : this.state.contextHeader } </div>
-					<div class={ style.city }>{ this.state.homeDisplay ? null : this.state.locate }</div>
-					<div class={ style.conditions }>{ this.state.homeDisplay ? null : this.state.cond }</div>
-					<span class={ tempStyles }>{ this.state.homeDisplay ? null :this.state.temp }</span>
-				</div>
-				<div class={ style.tableContainer }>
-					{ this.state.homeDisplay ? null :
-					<table>
-						<tr>
-							<td></td>
-							<th scope = "col">Wind speed</th>
-							<th scope = "col">Wind Strength</th>
-						</tr>
-						<tr>
-							<th scope = "row">09:00 - 11:00</th>
-							<td>7.5</td>
-							<td>4.5</td>
-						</tr>
-					</table>}
-				</div>
-				<div class= { style_iphone.container }> 
-					{ this.state.homeDisplay ? <Button class={ style_iphone.button } clickFunction={ this.ShowWindData } message={"Wind"}/ > : 
-					null }
-				</div>
-				<div class= { style_iphone.container }> 
-					{ this.state.homeDisplay ? <Button class={ style_iphone.button } clickFunction={ this.ShowPrecipitationData } message={"Precipitation"}/ > : null }
-				</div>
-				<div class= { style_iphone.container }> 
-				{ this.state.homeDisplay ? <Button class={ style_iphone.button } clickFunction={ this.ShowTemperatureData } message={"Temperature"}/ > : null }
+				<Title context={this.state.contextHeader}/>
+				<div>
+					{this.state.homeDisplay ?
+					<ul>
+						<li><Button class={ style_iphone.button } clickFunction={ this.ShowWindData } message={"Wind"} /></li>
+						<li><Button class={ style_iphone.button } clickFunction={ this.ShowPrecipitationData } message={"Precipitation"} /></li>
+						<li><Button class={ style_iphone.button } clickFunction={ this.ShowTemperatureData } message={"Temperature"} /></li>
+					</ul>
+					 : <Datatable/>}
 				</div>
 				<div class={ style_iphone.hcontainer}>
 					{ this.state.homeDisplay ? null : <Button class={ style_iphone.button } clickFunction={ this.ShowHome } message={"Home"}/ >  }
