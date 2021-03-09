@@ -68,9 +68,24 @@ export default class Iphone extends Component {
 					<div class={ style.conditions }>{ this.state.homeDisplay ? null : this.state.cond }</div>
 					<span class={ tempStyles }>{ this.state.homeDisplay ? null :this.state.temp }</span>
 				</div>
-				<div class={ style.details }></div>
+				<div class={ style.tableContainer }>
+					{ this.state.homeDisplay ? null :
+					<table>
+						<tr>
+							<td></td>
+							<th scope = "col">Wind speed</th>
+							<th scope = "col">Wind Strength</th>
+						</tr>
+						<tr>
+							<th scope = "row">09:00 - 11:00</th>
+							<td>7.5</td>
+							<td>4.5</td>
+						</tr>
+					</table>}
+				</div>
 				<div class= { style_iphone.container }> 
-					{ this.state.homeDisplay ? <Button class={ style_iphone.button } clickFunction={ this.ShowWindData } message={"Wind"}/ > : null }
+					{ this.state.homeDisplay ? <Button class={ style_iphone.button } clickFunction={ this.ShowWindData } message={"Wind"}/ > : 
+					null }
 				</div>
 				<div class= { style_iphone.container }> 
 					{ this.state.homeDisplay ? <Button class={ style_iphone.button } clickFunction={ this.ShowPrecipitationData } message={"Precipitation"}/ > : null }
@@ -98,4 +113,6 @@ export default class Iphone extends Component {
 		});      
 	}
 }
+
+
 
