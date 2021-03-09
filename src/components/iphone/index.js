@@ -42,19 +42,20 @@ export default class Iphone extends Component {
 	}
 	
 	ShowWindData = () => {
+		this.setState({selection: "wind"});
 		this.setState({ homeDisplay: false });
 		this.setState({contextHeader: "Wind data"});
-		this.setState({selection: "wind"});
+
 	}
 	ShowPrecipitationData = () => {
+		this.setState({selection: "prec"});
 		this.setState({ homeDisplay: false });
 		this.setState({contextHeader: "Precipitation data"});
-		this.setState({selection: "prec"});
 	}
 	ShowTemperatureData = () => {
+		this.setState({selection: "temp"});
 		this.setState({ homeDisplay: false });
 		this.setState({contextHeader: "Temperature data"});
-		this.setState({selection: "temp"});
 	}
 
 	ShowHome = () => {
@@ -72,33 +73,20 @@ export default class Iphone extends Component {
 		return (
 			<div class={ style.container }>
 				<Title context={this.state.contextHeader}/>
-				<div>
+				<div class = {style_iphone.container}>
 					{this.state.homeDisplay ?
-					<ul>
-						<li><Button class={ style_iphone.button } clickFunction={ this.ShowWindData } message={"Wind"} /></li>
-						<li><Button class={ style_iphone.button } clickFunction={ this.ShowPrecipitationData } message={"Precipitation"} /></li>
-						<li><Button class={ style_iphone.button } clickFunction={ this.ShowTemperatureData } message={"Temperature"} /></li>
+					<ul class={style.buttonlist}>
+						<li><Button class={ style_iphone.mbutton } clickFunction={ this.ShowWindData } message={"Wind"} /></li>
+						<li><Button class={ style_iphone.mbutton } clickFunction={ this.ShowPrecipitationData } message={"Precipitation"} /></li>
+						<li><Button class={ style_iphone.mbutton } clickFunction={ this.ShowTemperatureData } message={"Temperature"} /></li>
 					</ul>
-					 : <Datatable/>}
+					 : <Datatable choice={this.state.selection}/> }
 				</div>
 				<div class={ style_iphone.hcontainer}>
 					{ this.state.homeDisplay ? null : <Button class={ style_iphone.button } clickFunction={ this.ShowHome } message={"Home"}/ >  }
 				</div>
 			</div>
 		);
-	}
-
-	parseResponse = (parsed_json) => {
-		var location = parsed_json['name'];
-		var temp_c = parsed_json['main']['temp'];
-		var conditions = parsed_json['weather']['0']['description'];
-
-		// set states for fields so they could be rendered later on
-		this.setState({
-			locate: location,
-			temp: temp_c,
-			cond : conditions
-		});      
 	}
 }
 
