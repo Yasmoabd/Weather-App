@@ -19,18 +19,20 @@ export default class Iphone extends Component {
 	// a constructor with initial set states
 	constructor(props){
 		super(props);
+		this.fetchWeatherData();
 		// temperature state
 		this.state.temp = "";
 		// button display state
 		this.setState({ homeDisplay: true });
 		this.state.contextHeader = "Mountain Weather App";
 		this.state.selection = ""; 
+		this.setState({ iconnode: "" });
 	}
 
 	// a call to fetch weather data via wunderground
 	fetchWeatherData = () => {
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
-		var url = "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=4b59a3b6865564fefacb549fcbce29e2";
+		var url = "https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=94.037689&appid=652b23ab286647a7c9903391a74b4989";
 		$.ajax({
 			url: url,
 			dataType: "jsonp",
@@ -68,11 +70,16 @@ export default class Iphone extends Component {
 	render() {
 		// check if temperature data is fetched, if so add the sign styling to the page
 		const tempStyles = this.state.temp ? `${style.temperature} ${style.filled}` : style.temperature;
+		var icon = "http://openweathermap.org/img/wn/" + this.state.iconcode + "@2x.png";
 		
 		// display all weather data
+		// add tabel where image spand tw rows and have td of visibilty level
+		// add button conatiner
 		return (
 			<div class={ style.container }>
 				<Title context={this.state.contextHeader}/>
+				<div>{this.state.homeDisplay ? <img src={icon}/> : null}</div> 
+	
 				<div class = {style_iphone.container}>
 					{this.state.homeDisplay ?
 					<ul class={style.buttonlist}>
@@ -88,6 +95,17 @@ export default class Iphone extends Component {
 			</div>
 		);
 	}
+
+parseResponse = (parsed_json) => {
+        var icon;
+		icon = parsed_json['daily']['0']['weather']['0']['icon']
+        
+		console.log(icon)
+        // set states for fields so they could be rendered later on
+        this.setState({
+            iconcode : icon
+        });      
+    }
 }
 
 

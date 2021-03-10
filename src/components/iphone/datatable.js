@@ -110,13 +110,13 @@ export default class Datatable extends Component{
                     <table>
                             <tr>
                                 <td></td>
-                                <th scope = "col">Day 1</th>
-                                <th scope = "col">Day 2</th>
-                                <th scope = "col">Day 3</th>
-                                <th scope = "col">Day 4</th>
-                                <th scope = "col">Day 5</th>
-                                <th scope = "col">Day 6</th>
-                                <th scope = "col">Day 7</th>
+                                <th scope = "col">Mon</th>
+                                <th scope = "col">Tue</th>
+                                <th scope = "col">Wed</th>
+                                <th scope = "col">Thu</th>
+                                <th scope = "col">Fri</th>
+                                <th scope = "col">Sat</th>
+                                <th scope = "col">Sun</th>
                             </tr>
                             <tr>
                                 <th scope = "row">Max Temp</th>
