@@ -4,7 +4,7 @@ import $ from 'jquery';
 export default class Datatable extends Component{
     constructor(props){
         super(props);
-        this.fetchWeatherData();
+        this.setState({windspeedarr:["null","null","null","null","null","null","null"]});
     }
 
     fetchWeatherData = () => {
@@ -18,8 +18,10 @@ export default class Datatable extends Component{
 		})
     }
 
+
     render(){
         //add button which stes hour boolean, if true then show hor table
+        this.fetchWeatherData();
         let weatherType = this.props.choice;
         if(weatherType==="wind"){
             return(
@@ -36,9 +38,9 @@ export default class Datatable extends Component{
                                 <th scope = "col">Day 7</th>
                             </tr>
                             <tr>
-                                <th scope = "row">{weatherType}</th>
-                                <td>jndid</td>
-                                <td>{this.state.pressure}</td>
+                                <th scope = "row">Wind Speed</th>
+                                <td>{this.state.windspeedarr[0]}</td>
+                                <td>{this.state.wind_deg}</td>
                             </tr>
                     </table>
                     
@@ -66,11 +68,20 @@ export default class Datatable extends Component{
     
     
         parseResponse = (parsed_json) => {
-        var press = parsed_json['daily']['4']['dt'];
+        var i;
+        var speedarr = [];
+        for(i=0;i<7;i++){
+            var speed = parsed_json['daily'][i]['wind_speed'];
+            speedarr.push(speed)
+        }
+        
+        var deg = parsed_json['daily']['0']['wind_deg']
 
         // set states for fields so they could be rendered later on
         this.setState({
-            pressure : press
+            windspeed : speed,
+            windspeedarr : speedarr,
+            wind_deg : deg
         });      
     }
 }
