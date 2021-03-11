@@ -26,7 +26,8 @@ export default class Iphone extends Component {
 		this.setState({ homeDisplay: true });
 		this.state.contextHeader = "Mountain Weather App";
 		this.state.selection = ""; 
-		this.setState({ iconnode: "" });
+		this.setState({iconLinkDaily:["null","null","null","null","null","null","null"]});
+		
 	}
 
 	// a call to fetch weather data via wunderground
@@ -72,14 +73,21 @@ export default class Iphone extends Component {
 		const tempStyles = this.state.temp ? `${style.temperature} ${style.filled}` : style.temperature;
 		var icon = "http://openweathermap.org/img/wn/" + this.state.iconcode + "@2x.png";
 		
-		// display all weather data
-		// add tabel where image spand tw rows and have td of visibilty level
 		// add button conatiner
 		return (
 			<div class={ style.container }>
-				<Title context={this.state.contextHeader}/>
-				<div>{this.state.homeDisplay ? <img src={icon}/> : null}</div> 
-	
+				<div>{this.state.homeDisplay ? 
+				<table class={style.homeT}>
+					<tr>
+						<td rowSpan="2"><img src={icon}/></td>
+						<td>Visibility:</td>
+					</tr>
+					<tr>
+						<td>{this.state.vis}%</td>
+					</tr>
+				</table> : <Title context={this.state.contextHeader}/>}
+				</div>
+				
 				<div class = {style_iphone.container}>
 					{this.state.homeDisplay ?
 					<ul class={style.buttonlist}>
@@ -89,21 +97,44 @@ export default class Iphone extends Component {
 					</ul>
 					 : <Datatable choice={this.state.selection}/> }
 				</div>
-				<div class={ style_iphone.hcontainer}>
-					{ this.state.homeDisplay ? null : <Button class={ style_iphone.button } clickFunction={ this.ShowHome } message={"Home"}/ >  }
+				<div>
+					{ this.state.homeDisplay ? 
+					<table class={style.iconTable}>
+						<tr>
+							<td>Mon</td><td>Mon</td><td>Mon</td><td>Mon</td><td>Mon</td><td>Mon</td><td>Mon</td>
+						</tr>
+						<tr>
+							<td><img src={this.state.iconLinkDaily[0]}/></td>
+							<td><img src={this.state.iconLinkDaily[1]}/></td>
+							<td><img src={this.state.iconLinkDaily[2]}/></td>
+							<td><img src={this.state.iconLinkDaily[3]}/></td>
+							<td><img src={this.state.iconLinkDaily[4]}/></td>
+							<td><img src={this.state.iconLinkDaily[5]}/></td>
+							<td><img src={this.state.iconLinkDaily[6]}/></td>
+						</tr>
+					</table> : <Button class={ style_iphone.button } clickFunction={ this.ShowHome } message={"Home"}/ >  }
 				</div>
 			</div>
 		);
 	}
 
-parseResponse = (parsed_json) => {
-        var icon;
-		icon = parsed_json['daily']['0']['weather']['0']['icon']
-        
-		console.log(icon)
-        // set states for fields so they could be rendered later on
+	parseResponse = (parsed_json) => {
+    	var icon;
+		var visibilty;
+		icon = parsed_json['daily']['0']['weather']['0']['icon'];
+		visibilty = parsed_json['daily']['0']['clouds'];
+		var iconlinkarr = [];
+
+		for(let i = 0;i<7;i++){
+			var code = parsed_json['daily'][i]['weather']['0']['icon'];
+			iconlinkarr.push("http://openweathermap.org/img/wn/"+code+"@2x.png");
+		}
+
+
         this.setState({
-            iconcode : icon
+            iconcode : icon,
+			vis : visibilty,
+			iconLinkDaily : iconlinkarr
         });      
     }
 }
