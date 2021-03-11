@@ -101,7 +101,7 @@ export default class Iphone extends Component {
 					{ this.state.homeDisplay ? 
 					<table class={style.iconTable}>
 						<tr>
-							<td>Mon</td><td>Mon</td><td>Mon</td><td>Mon</td><td>Mon</td><td>Mon</td><td>Mon</td>
+							<td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td><td>Sun</td>
 						</tr>
 						<tr>
 							<td><img src={this.state.iconLinkDaily[0]}/></td>
