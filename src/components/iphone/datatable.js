@@ -1,5 +1,7 @@
 import { h, render, Component } from 'preact';
 import $ from 'jquery';
+import style from './style';
+import Button from '../button';
 
 export default class Datatable extends Component{
     constructor(props){
@@ -144,38 +146,68 @@ export default class Datatable extends Component{
         );
     }
 
+    makeDayTempTable = () =>{
+        return(
+            <div>
+                <table>
+                    <tr>
+                        <td></td>
+                        <th scope = "col">03:00-09:00</th>
+                        <th scope = "col">09:00-16:00</th>
+                        <th scope = "col">16:00-22:00</th>
+                        <th scope = "col">22:00-03:00</th> 
+                    </tr>
+                    <tr>
+                    <th scope = "row">Temp</th>
+                    <td>{this.state.mornTemp}</td>
+                    <td>{this.state.dayTemp}</td>
+                    <td>{this.state.eveTemp}</td>
+                    <td>{this.state.nightTemp}</td>
+                    </tr>
+                </table>
+            </div>
+        );
+    }
 
+    printdata = () =>{
+        print();
+    }
+   
     render(){
         //add button which stes hour boolean, if true then show hor table
         let weatherType = this.props.choice;
         const windtable = this.makeWindTable();
         const precTable = this.makePrecTable();
         const tempTable = this.makeTempTable();
+        const dayTempTable = this.makeDayTempTable();
         if(weatherType==="wind"){
             return(
-                <div>{windtable}</div>
+                <div>
+                    <div>{windtable}</div>
+                    <div><Button clickFunction={ this.printdata } message={"download data"} /></div>
+                </div>
             );
         }
         else if(weatherType==="temp"){
             return(
                 <div>
-                    {tempTable}
+                    <div>{dayTempTable}</div>
+                    <div>{tempTable}</div>
+                    <div><Button clickFunction={ this.printdata } message={"download data"} /></div>
                 </div>
             );
         }
         else if(weatherType==="prec"){
             return(
                 <div>
-                    {precTable}
+                    <div>{precTable}</div>
+                    <div><Button clickFunction={ this.printdata } message={"download data"} /></div>
                 </div>
             );
         }
     }
       
-            
-            
-    
-    
+ 
         parseResponse = (parsed_json) => {
         var i;
         var speedarr = [];
@@ -184,6 +216,14 @@ export default class Datatable extends Component{
         var precarr = [];
         var minarr = [];
         var maxarr = [];
+        var mor;
+        var day;
+        var eve;
+        var night;
+        mor = parsed_json['daily']['0']['temp']['morn'];
+        day = parsed_json['daily']['0']['temp']['day'];
+        eve = parsed_json['daily']['0']['temp']['eve'];
+        night = parsed_json['daily']['0']['temp']['night'];
         for(i=0;i<7;i++){
             speedarr.push(parsed_json['daily'][i]['wind_speed']);
             degarr.push(parsed_json['daily'][i]['wind_deg']);
@@ -201,7 +241,11 @@ export default class Datatable extends Component{
             precCloudarr : cloudarr,
             precPoparr : precarr,
             maxTemparr : maxarr,
-            minTemparr : minarr
+            minTemparr : minarr,
+            mornTemp: mor,
+            dayTemp : day,
+            eveTemp : eve,
+            nightTemp : night
         });      
     }
 }

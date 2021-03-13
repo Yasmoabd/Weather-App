@@ -90,11 +90,11 @@ export default class Iphone extends Component {
 				
 				<div class = {style_iphone.container}>
 					{this.state.homeDisplay ?
-					<ul class={style.buttonlist}>
-						<li><Button class={ style_iphone.mbutton } clickFunction={ this.ShowWindData } message={"Wind"} /></li>
-						<li><Button class={ style_iphone.mbutton } clickFunction={ this.ShowPrecipitationData } message={"Precipitation"} /></li>
-						<li><Button class={ style_iphone.mbutton } clickFunction={ this.ShowTemperatureData } message={"Temperature"} /></li>
-					</ul>
+					<table>
+						<tr><td><Button clickFunction={ this.ShowWindData } message={"Wind"} /></td></tr>
+						<tr><td><Button clickFunction={ this.ShowPrecipitationData } message={"Precipitation"} /></td></tr>
+						<tr><td><Button clickFunction={ this.ShowTemperatureData } message={"Temperature"} /></td></tr>
+					</table>
 					 : <Datatable choice={this.state.selection}/> }
 				</div>
 				<div>
