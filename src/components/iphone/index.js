@@ -90,7 +90,7 @@ export default class Iphone extends Component {
 				
 				<div class = {style_iphone.container}>
 					{this.state.homeDisplay ?
-					<table>
+					<table class={style.buttontable}>
 						<tr><td><Button clickFunction={ this.ShowWindData } message={"Wind"} /></td></tr>
 						<tr><td><Button clickFunction={ this.ShowPrecipitationData } message={"Precipitation"} /></td></tr>
 						<tr><td><Button clickFunction={ this.ShowTemperatureData } message={"Temperature"} /></td></tr>
@@ -121,6 +121,7 @@ export default class Iphone extends Component {
 	parseResponse = (parsed_json) => {
     	var icon;
 		var visibilty;
+		
 		icon = parsed_json['daily']['0']['weather']['0']['icon'];
 		visibilty = parsed_json['daily']['0']['clouds'];
 		var iconlinkarr = [];

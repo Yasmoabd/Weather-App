@@ -29,16 +29,16 @@ export default class Datatable extends Component{
     makeWindTable = () => {
         return(
             <div>
-                    <table>
+                    <table class={style.datatable}>
                             <tr>
                                 <td></td>
-                                <th scope = "col">Day 1</th>
-                                <th scope = "col">Day 2</th>
-                                <th scope = "col">Day 3</th>
-                                <th scope = "col">Day 4</th>
-                                <th scope = "col">Day 5</th>
-                                <th scope = "col">Day 6</th>
-                                <th scope = "col">Day 7</th>
+                                <th scope = "col">Mon</th>
+                                <th scope = "col">Tue</th>
+                                <th scope = "col">Wed</th>
+                                <th scope = "col">Thu</th>
+                                <th scope = "col">Fri</th>
+                                <th scope = "col">Sat</th>
+                                <th scope = "col">Sun</th>
                             </tr>
                             <tr>
                                 <th scope = "row">Wind Speed</th>
@@ -69,16 +69,16 @@ export default class Datatable extends Component{
     makePrecTable = () => {
         return(
             <div>
-                    <table>
+                    <table class={style.datatable}>
                             <tr>
                                 <td></td>
-                                <th scope = "col">Day 1</th>
-                                <th scope = "col">Day 2</th>
-                                <th scope = "col">Day 3</th>
-                                <th scope = "col">Day 4</th>
-                                <th scope = "col">Day 5</th>
-                                <th scope = "col">Day 6</th>
-                                <th scope = "col">Day 7</th>
+                                <th scope = "col">Mon</th>
+                                <th scope = "col">Tue</th>
+                                <th scope = "col">Wed</th>
+                                <th scope = "col">Thu</th>
+                                <th scope = "col">Fri</th>
+                                <th scope = "col">Sat</th>
+                                <th scope = "col">Sun</th>
                             </tr>
                             <tr>
                                 <th scope = "row">Cloudiness, %</th>
@@ -109,7 +109,7 @@ export default class Datatable extends Component{
     makeTempTable = () => {
         return(
             <div>
-                    <table>
+                    <table class={style.datatable}>
                             <tr>
                                 <td></td>
                                 <th scope = "col">Mon</th>
@@ -149,13 +149,13 @@ export default class Datatable extends Component{
     makeDayTempTable = () =>{
         return(
             <div>
-                <table>
+                <table class={style.datatable}>
                     <tr>
                         <td></td>
-                        <th scope = "col">03:00-09:00</th>
-                        <th scope = "col">09:00-16:00</th>
-                        <th scope = "col">16:00-22:00</th>
-                        <th scope = "col">22:00-03:00</th> 
+                        <th scope = "col">3AM-9AM</th>
+                        <th scope = "col">9AM-4PM</th>
+                        <th scope = "col">4PM-10PM</th>
+                        <th scope = "col">10PM-3AM</th> 
                     </tr>
                     <tr>
                     <th scope = "row">Temp</th>
@@ -191,7 +191,6 @@ export default class Datatable extends Component{
         else if(weatherType==="temp"){
             return(
                 <div>
-                    <div>{dayTempTable}</div>
                     <div>{tempTable}</div>
                     <div><Button clickFunction={ this.printdata } message={"download data"} /></div>
                 </div>
