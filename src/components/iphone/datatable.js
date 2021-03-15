@@ -6,13 +6,15 @@ import Button from '../button';
 export default class Datatable extends Component{
     constructor(props){
         super(props);
-        this.fetchWeatherData();
         this.setState({windspeedarr:["null","null","null","null","null","null","null"]});
         this.setState({winddegarr:["null","null","null","null","null","null","null"]});
         this.setState({precCloudarr:["null","null","null","null","null","null","null"]});
         this.setState({precPoparr:["null","null","null","null","null","null","null"]});
         this.setState({minTemparr:["null","null","null","null","null","null","null"]});
         this.setState({maxTemparr:["null","null","null","null","null","null","null"]});
+        this.fetchWeatherData();
+        
+        this.setState({warning:""});
     }
 
     fetchWeatherData = () => {
@@ -172,6 +174,53 @@ export default class Datatable extends Component{
     printdata = () =>{
         print();
     }
+
+    dayConverter = (index) =>{
+        if(index==0){
+            return "Mon ";
+        }
+        else if(index ==1){
+            return "Tue ";
+        }
+        else if(index ==2){
+            return "Wed ";
+        }
+        else if(index ==3){
+            return "Thu ";
+        }
+        else if(index ==4){
+            return "Fri ";
+        }
+        else if(index ==5){
+            return "Sat ";
+        }
+        else{
+            return "Sun ";
+        }
+    }
+
+    windWarning = (choice,arr) =>{
+        var warningList = [];
+        var i;
+        for(i = 0;i<7;i++){
+            if(choice==="wind"){
+                if(arr[i]>=10){
+                    warningList.push(this.dayConverter(i));
+                }
+            }
+            else if(choice==="prec"){
+                if(arr[i]>75){
+                    warningList.push(this.dayConverter(i));
+                }
+            }
+            else{
+                if(arr[i]<=-10){
+                    warningList.push(this.dayConverter(i));
+                }
+            }
+        }
+        return warningList;
+    }
    
     render(){
         //add button which stes hour boolean, if true then show hor table
@@ -180,10 +229,12 @@ export default class Datatable extends Component{
         const precTable = this.makePrecTable();
         const tempTable = this.makeTempTable();
         const dayTempTable = this.makeDayTempTable();
+
         if(weatherType==="wind"){
             return(
                 <div>
                     <div>{windtable}</div>
+                    <h2>{this.state.warning} have strong wind! Be Carefull</h2>
                     <div><Button clickFunction={ this.printdata } message={"download data"} /></div>
                 </div>
             );
@@ -192,6 +243,7 @@ export default class Datatable extends Component{
             return(
                 <div>
                     <div>{tempTable}</div>
+                    <h2>{this.state.warning} are very cold! Be Carefull</h2>
                     <div><Button clickFunction={ this.printdata } message={"download data"} /></div>
                 </div>
             );
@@ -200,6 +252,7 @@ export default class Datatable extends Component{
             return(
                 <div>
                     <div>{precTable}</div>
+                    <h2>{this.state.warning} have low visibilty! Be Carefull</h2>
                     <div><Button clickFunction={ this.printdata } message={"download data"} /></div>
                 </div>
             );
@@ -245,6 +298,18 @@ export default class Datatable extends Component{
             dayTemp : day,
             eveTemp : eve,
             nightTemp : night
-        });      
+        }); 
+        
+        var type = this.props.choice;
+        if(type==="wind"){
+            this.setState({warning:this.windWarning(type,this.state.windspeedarr)});
+        }
+        else if(type==="prec"){
+            this.setState({warning:this.windWarning(type,this.state.precCloudarr)});
+        }
+        else{
+            this.setState({warning:this.windWarning(type,this.state.minTemparr)});
+        }
+        console.log(this.state.warning);
     }
 }

@@ -27,13 +27,14 @@ export default class Iphone extends Component {
 		this.state.contextHeader = "Mountain Weather App";
 		this.state.selection = ""; 
 		this.setState({iconLinkDaily:["null","null","null","null","null","null","null"]});
+		this.setState({dtemparr:["null","null","null","null","null","null","null"]});
 		
 	}
 
 	// a call to fetch weather data via wunderground
 	fetchWeatherData = () => {
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
-		var url = "https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=94.037689&appid=652b23ab286647a7c9903391a74b4989";
+		var url = "https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=94.037689&units=metric&appid=652b23ab286647a7c9903391a74b4989";
 		$.ajax({
 			url: url,
 			dataType: "jsonp",
@@ -81,9 +82,11 @@ export default class Iphone extends Component {
 					<tr>
 						<td rowSpan="2"><img src={icon}/></td>
 						<td>Visibility:</td>
+						<td>Temperature:</td>
 					</tr>
 					<tr>
 						<td>{this.state.vis}%</td>
+						<td>{this.state.dtemparr[0]}</td>
 					</tr>
 				</table> : <Title context={this.state.contextHeader}/>}
 				</div>
@@ -112,6 +115,15 @@ export default class Iphone extends Component {
 							<td><img src={this.state.iconLinkDaily[5]}/></td>
 							<td><img src={this.state.iconLinkDaily[6]}/></td>
 						</tr>
+						<tr>
+							<td>{this.state.dtemparr[0]}</td>
+							<td>{this.state.dtemparr[1]}</td>
+							<td>{this.state.dtemparr[2]}</td>
+							<td>{this.state.dtemparr[3]}</td>
+							<td>{this.state.dtemparr[4]}</td>
+							<td>{this.state.dtemparr[5]}</td>
+							<td>{this.state.dtemparr[6]}</td>
+						</tr>
 					</table> : <Button class={ style_iphone.button } clickFunction={ this.ShowHome } message={"Home"}/ >  }
 				</div>
 			</div>
@@ -121,7 +133,8 @@ export default class Iphone extends Component {
 	parseResponse = (parsed_json) => {
     	var icon;
 		var visibilty;
-		
+		var temparr = [];
+
 		icon = parsed_json['daily']['0']['weather']['0']['icon'];
 		visibilty = parsed_json['daily']['0']['clouds'];
 		var iconlinkarr = [];
@@ -129,13 +142,15 @@ export default class Iphone extends Component {
 		for(let i = 0;i<7;i++){
 			var code = parsed_json['daily'][i]['weather']['0']['icon'];
 			iconlinkarr.push("http://openweathermap.org/img/wn/"+code+"@2x.png");
+			temparr.push(parsed_json['daily'][i]['temp']['day'])
 		}
 
 
         this.setState({
             iconcode : icon,
 			vis : visibilty,
-			iconLinkDaily : iconlinkarr
+			iconLinkDaily : iconlinkarr,
+			dtemparr : temparr
         });      
     }
 }
