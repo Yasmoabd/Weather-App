@@ -82,7 +82,7 @@ export default class Iphone extends Component {
 					<tr>
 						<td rowSpan="2"><img src={icon}/></td>
 						<td>Visibility:</td>
-						<td>Temperature:</td>
+						<td>Temp:</td>
 					</tr>
 					<tr>
 						<td>{this.state.vis}%</td>
