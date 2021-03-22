@@ -68,6 +68,12 @@ export default class Iphone extends Component {
 		this.setstate({temp : ""});
 	}
 
+	ShowSosData = () => {
+		this.setState({selection: "sos"});
+		this.setState({ homeDisplay: false });
+		this.setState({contextHeader: "SOS"});
+	}
+
 	// the main render method for the iphone component
 	render() {
 		// check if temperature data is fetched, if so add the sign styling to the page
@@ -97,6 +103,7 @@ export default class Iphone extends Component {
 						<tr><td><Button clickFunction={ this.ShowWindData } message={"Wind"} /></td></tr>
 						<tr><td><Button clickFunction={ this.ShowPrecipitationData } message={"Precipitation"} /></td></tr>
 						<tr><td><Button clickFunction={ this.ShowTemperatureData } message={"Temperature"} /></td></tr>
+						<tr><td><Button clickFunction={ this.ShowSosData } message={"emergency"} /></td></tr>
 					</table>
 					 : <Datatable choice={this.state.selection}/> }
 				</div>

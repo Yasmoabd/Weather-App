@@ -257,6 +257,13 @@ export default class Datatable extends Component{
                 </div>
             );
         }
+        else if (weatherType=="sos"){
+            return(
+                <div>
+                    <p>Emergency services : 999 [UK]</p>
+                </div>
+            );
+        }
     }
       
  
