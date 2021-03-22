@@ -261,6 +261,7 @@ export default class Datatable extends Component{
             return(
                 <div>
                     <p>Emergency services : 999 [UK]</p>
+                    <p>Emergency Assistance : 112 [UK]</p>
                 </div>
             );
         }
