@@ -2,6 +2,7 @@ import { h, render, Component } from 'preact';
 import $ from 'jquery';
 import style from './style';
 import Button from '../button';
+import Advice from './advice';
 
 export default class Datatable extends Component{
     constructor(props){
@@ -12,6 +13,7 @@ export default class Datatable extends Component{
         this.setState({precPoparr:["null","null","null","null","null","null","null"]});
         this.setState({minTemparr:["null","null","null","null","null","null","null"]});
         this.setState({maxTemparr:["null","null","null","null","null","null","null"]});
+        this.setState({advicePage : false});
         this.fetchWeatherData();
         
         this.setState({warning:""});
@@ -221,48 +223,100 @@ export default class Datatable extends Component{
         }
         return warningList;
     }
+
+    showAdvice = () =>{
+        this.setState({advicePage: true});
+    }
    
     render(){
         //add button which stes hour boolean, if true then show hor table
         let weatherType = this.props.choice;
-        const windtable = this.makeWindTable();
+        const windTable = this.makeWindTable();
         const precTable = this.makePrecTable();
         const tempTable = this.makeTempTable();
         const dayTempTable = this.makeDayTempTable();
+        if(this.state.advicePage==false){
+            if(weatherType==="wind"){
+                if(this.state.warning == ""){
+                    return(
+                        <div>
+                        <div>{windTable}</div>
+                        <div><Button clickFunction={ this.printdata } message={"Download"} /></div>
+                        </div>
 
-        if(weatherType==="wind"){
-            return(
-                <div>
-                    <div>{windtable}</div>
-                    <h2>{this.state.warning} have strong wind! Be Carefull</h2>
-                    <div><Button clickFunction={ this.printdata } message={"download data"} /></div>
-                </div>
-            );
+                    );
+                }
+
+                else {
+                    return(
+                        <div>
+                            <div>{windTable}</div>
+                            <h1>WARNING!!!</h1>
+                            <h2>Strong Winds on {this.state.warning}</h2>
+                            <div><Button clickFunction={ this.printdata } message={"Download"} /></div>
+                            <div><Button clickFunction={ this.showAdvice } message={"Advice"}/></div>
+                        </div>
+                    );
+                }
+            }
+
+            else if(weatherType==="temp"){
+                if(this.state.warning == ""){
+                    return(
+                        <div>
+                        <div>{tempTable}</div>
+                        <div><Button clickFunction={ this.printdata } message={"Download"} /></div>
+                        </div>
+
+                    );
+                }
+                else{
+                    return(
+                        <div>
+                            <div>{tempTable}</div>
+                            <h1>WARNING!!!</h1>
+                            <h2>Very Cold on {this.state.warning}</h2>
+                            <div><Button clickFunction={ this.printdata } message={"Download"} /></div>
+                            <div><Button clickFunction={ this.showAdvice } message={"Advice"}/></div>
+                        </div>
+                    );
+                }
+            }
+            else if(weatherType==="prec"){
+                if(this.state.warning == ""){
+                    return(
+                        <div>
+                        <div>{precTable}</div>
+                        <div><Button clickFunction={ this.printdata } message={"Download"} /></div>
+                        </div>
+
+                    );
+                }
+                else{
+                    return(
+                        <div>
+                            <div>{precTable}</div>
+                            <h1>WARNING!!!</h1>
+                            <h2>Low Visibility on {this.state.warning}</h2>
+                            <div><Button clickFunction={ this.printdata } message={"Download"} /></div>
+                            <div><Button clickFunction={ this.showAdvice } message={"Advice"}/></div>
+                        </div>
+                    );
+                }
+            }
+        
+            else if (weatherType=="sos"){
+                return(
+                    <div>
+                        <p>Emergency services : 999 [UK]</p>
+                        <p>Emergency Assistance : 112 [UK]</p>
+                    </div>
+                );
+            }
         }
-        else if(weatherType==="temp"){
+        else{
             return(
-                <div>
-                    <div>{tempTable}</div>
-                    <h2>{this.state.warning} are very cold! Be Carefull</h2>
-                    <div><Button clickFunction={ this.printdata } message={"download data"} /></div>
-                </div>
-            );
-        }
-        else if(weatherType==="prec"){
-            return(
-                <div>
-                    <div>{precTable}</div>
-                    <h2>{this.state.warning} have low visibilty! Be Carefull</h2>
-                    <div><Button clickFunction={ this.printdata } message={"download data"} /></div>
-                </div>
-            );
-        }
-        else if (weatherType=="sos"){
-            return(
-                <div>
-                    <p>Emergency services : 999 [UK]</p>
-                    <p>Emergency Assistance : 112 [UK]</p>
-                </div>
+                <div><Advice/></div>
             );
         }
     }
