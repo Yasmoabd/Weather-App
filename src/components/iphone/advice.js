@@ -16,7 +16,6 @@ export default class Advice extends Component{
         super(props);
         this.fetchWeatherData();
         this.state.selection = "";
-        // var weatherType = this.props.choice;
     }
 
     fetchWeatherData = () => {
@@ -58,8 +57,14 @@ export default class Advice extends Component{
         }
     }
     render(){
+        var warning = this.props.warning;
+        var choice = this.props.choice;
         return(
-            <div><h1>Advice page</h1></div>
+            <div><h1>Advice page</h1>
+            <p>{warning}</p>
+            <p>{choice}</p>
+            </div>
+            
         );
     }
 }

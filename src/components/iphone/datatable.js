@@ -316,7 +316,7 @@ export default class Datatable extends Component{
         }
         else{
             return(
-                <div><Advice/></div>
+                <div><Advice choice ={weatherType} warning={this.state.warning}/></div>
             );
         }
     }
