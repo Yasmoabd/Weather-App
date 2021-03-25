@@ -237,74 +237,40 @@ export default class Datatable extends Component{
         const dayTempTable = this.makeDayTempTable();
         if(this.state.advicePage==false){
             if(weatherType==="wind"){
-                if(this.state.warning == ""){
-                    return(
-                        <div>
+                return(
+                    <div>
                         <div>{windTable}</div>
-                        <div><Button clickFunction={ this.printdata } message={"Download"} /></div>
-                        </div>
-
+                        <h1>WARNING!!!</h1>
+                        <h2>Strong Winds on {this.state.warning}</h2>
+                        <div><button class={style.iconbutton} onClick={ this.printdata }><img src='../../assets/icons/do.png'/></button></div>
+                        <div><Button clickFunction={ this.showAdvice } message={"Advice"}/></div>
+                    </div>
                     );
                 }
-
-                else {
-                    return(
-                        <div>
-                            <div>{windTable}</div>
-                            <h1>WARNING!!!</h1>
-                            <h2>Strong Winds on {this.state.warning}</h2>
-                            <div><Button clickFunction={ this.printdata } message={"Download"} /></div>
-                            <div><Button clickFunction={ this.showAdvice } message={"Advice"}/></div>
-                        </div>
-                    );
-                }
-            }
-
             else if(weatherType==="temp"){
-                if(this.state.warning == ""){
-                    return(
-                        <div>
+                
+                return(
+                    <div>
                         <div>{tempTable}</div>
-                        <div><Button clickFunction={ this.printdata } message={"Download"} /></div>
-                        </div>
-
-                    );
-                }
-                else{
-                    return(
-                        <div>
-                            <div>{tempTable}</div>
-                            <h1>WARNING!!!</h1>
-                            <h2>Very Cold on {this.state.warning}</h2>
-                            <div><Button clickFunction={ this.printdata } message={"Download"} /></div>
-                            <div><Button clickFunction={ this.showAdvice } message={"Advice"}/></div>
-                        </div>
-                    );
-                }
+                        <h1>WARNING!!!</h1>
+                        <h2>Very Cold on {this.state.warning}</h2>
+                        <div><button class={style.iconbutton} onClick={ this.printdata }><img src='../../assets/icons/do.png'/></button></div>
+                        <div><Button clickFunction={ this.showAdvice } message={"Advice"}/></div>
+                    </div>
+                );
+                
             }
             else if(weatherType==="prec"){
-                if(this.state.warning == ""){
-                    return(
-                        <div>
+                return(
+                    <div>
                         <div>{precTable}</div>
-                        <div><Button clickFunction={ this.printdata } message={"Download"} /></div>
-                        </div>
-
-                    );
-                }
-                else{
-                    return(
-                        <div>
-                            <div>{precTable}</div>
-                            <h1>WARNING!!!</h1>
-                            <h2>Low Visibility on {this.state.warning}</h2>
-                            <div><Button clickFunction={ this.printdata } message={"Download"} /></div>
-                            <div><Button clickFunction={ this.showAdvice } message={"Advice"}/></div>
-                        </div>
-                    );
-                }
+                        <h1>WARNING!!!</h1>
+                        <h2>Low Visibility on {this.state.warning}</h2>
+                        <div><button class={style.iconbutton} onClick={ this.printdata }><img src='../../assets/icons/do.png'/></button></div>
+                        <div><Button clickFunction={ this.showAdvice } message={"Advice"}/></div>
+                    </div>
+                );
             }
-        
             else if (weatherType=="sos"){
                 return(
                     <div>

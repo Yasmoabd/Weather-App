@@ -103,7 +103,7 @@ export default class Iphone extends Component {
 						<tr><td><Button clickFunction={ this.ShowWindData } message={"Wind"} /></td></tr>
 						<tr><td><Button clickFunction={ this.ShowPrecipitationData } message={"Precipitation"} /></td></tr>
 						<tr><td><Button clickFunction={ this.ShowTemperatureData } message={"Temperature"} /></td></tr>
-						<tr><td><Button clickFunction={ this.ShowSosData } message={"emergency"} /></td></tr>
+						<tr><td><button class={style.iconbutton} onClick={ this.ShowSosData }><img src='../../assets/icons/emergency-call.png'/></button></td></tr>
 					</table>
 					 : <Datatable choice={this.state.selection}/> }
 				</div>
@@ -131,7 +131,7 @@ export default class Iphone extends Component {
 							<td>{this.state.dtemparr[5]}</td>
 							<td>{this.state.dtemparr[6]}</td>
 						</tr>
-					</table> : <Button class={ style_iphone.button } clickFunction={ this.ShowHome } message={"Home"}/ >  }
+					</table> : <button class={style.iconbutton} onClick={ this.ShowHome }><img src='../../assets/icons/home.png'/></button>  }
 				</div>
 			</div>
 		);

@@ -9,7 +9,7 @@ export default class Title extends Component{
         let contextHeader = this.props.context;
         return(
             <div>
-                <h1>{contextHeader}</h1>
+                <h3>{contextHeader}</h3>
             </div>
         );
         
