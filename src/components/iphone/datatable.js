@@ -257,8 +257,7 @@ export default class Datatable extends Component{
                         <div><button class={style.iconbutton} onClick={ this.printdata }><img src='../../assets/icons/do.png'/></button></div>
                         <div><Button clickFunction={ this.showAdvice } message={"Advice"}/></div>
                     </div>
-                );
-                
+                ); 
             }
             else if(weatherType==="prec"){
                 return(
@@ -338,6 +337,5 @@ export default class Datatable extends Component{
         else{
             this.setState({warning:this.windWarning(type,this.state.minTemparr)});
         }
-        console.log(this.state.warning);
     }
 }

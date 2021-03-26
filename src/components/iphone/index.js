@@ -28,8 +28,23 @@ export default class Iphone extends Component {
 		this.state.selection = ""; 
 		this.setState({iconLinkDaily:["null","null","null","null","null","null","null"]});
 		this.setState({dtemparr:["null","null","null","null","null","null","null"]});
-		
+		this.setState({dayArray:["null","null","null","null","null","null","null"]});
+		this.handleDropdownChange = this.handleDropdownChange.bind(this);
+		this.setState({selectedDay:0});
 	}
+  
+	handleDropdownChange(e) {
+	  this.setState({ selectValue: e.target.value });
+	  var i;
+	  for(i=0;i<7;i++){
+		  var stringDate = String(this.state.dayArray[i]);
+		  if(stringDate===this.state.selectValue){
+			  this.setState({selectedDay: i});
+		  }
+	  }
+	  this.fetchWeatherData();
+	}
+		
 
 	// a call to fetch weather data via wunderground
 	fetchWeatherData = () => {
@@ -42,7 +57,6 @@ export default class Iphone extends Component {
 			error : function(req, err){ console.log('API call failed ' + err); }
 		})
 		// once the data grabbed, hide the button
-		this.setState({ homeDisplay: false });
 	}
 	
 	ShowWindData = () => {
@@ -74,15 +88,35 @@ export default class Iphone extends Component {
 		this.setState({contextHeader: "SOS"});
 	}
 
+	DaySelector = () => {
+		var i;
+		let myarr = [];
+		for(i=0;i<7;i++){
+			myarr.push(String(this.state.dayArray[i]));
+		}
+		return(
+			<div>
+				<select onChange={this.handleDropdownChange}>
+					<option>{myarr[0]}</option>
+					<option>{myarr[1]}</option>
+					<option>{myarr[2]}</option>
+					<option>{myarr[3]}</option>
+					<option>{myarr[4]}</option>
+					<option>{myarr[5]}</option>
+					<option>{myarr[6]}</option>
+				</select>
+			</div>
+		);
+	}
+
 	// the main render method for the iphone component
 	render() {
-		// check if temperature data is fetched, if so add the sign styling to the page
-		const tempStyles = this.state.temp ? `${style.temperature} ${style.filled}` : style.temperature;
 		var icon = "http://openweathermap.org/img/wn/" + this.state.iconcode + "@2x.png";
-		
+		let DaySelector = this.DaySelector();
 		// add button conatiner
 		return (
 			<div class={ style.container }>
+				<div>{this.state.homeDisplay ? DaySelector : null}</div>
 				<div>{this.state.homeDisplay ? 
 				<table class={style.homeT}>
 					<tr>
@@ -92,7 +126,7 @@ export default class Iphone extends Component {
 					</tr>
 					<tr>
 						<td>{this.state.vis}%</td>
-						<td>{this.state.dtemparr[0]}</td>
+						<td>{this.state.temp}</td>
 					</tr>
 				</table> : <Title context={this.state.contextHeader}/>}
 				</div>
@@ -131,7 +165,7 @@ export default class Iphone extends Component {
 							<td>{this.state.dtemparr[5]}</td>
 							<td>{this.state.dtemparr[6]}</td>
 						</tr>
-					</table> : <button class={style.iconbutton} onClick={ this.ShowHome }><img src='../../assets/icons/home.png'/></button>  }
+					</table> : <button class={style.iconbutton} onClick={ this.ShowHome }><img src='../../assets/icons/home.png'/></button>}
 				</div>
 			</div>
 		);
@@ -141,15 +175,20 @@ export default class Iphone extends Component {
     	var icon;
 		var visibilty;
 		var temparr = [];
+		var dayarr = [];
+		var selectedTemp;
 
-		icon = parsed_json['daily']['0']['weather']['0']['icon'];
-		visibilty = parsed_json['daily']['0']['clouds'];
+		icon = parsed_json['daily'][this.state.selectedDay]['weather']['0']['icon'];
+		visibilty = parsed_json['daily'][this.state.selectedDay]['clouds'];
+		selectedTemp = parsed_json['daily'][this.state.selectedDay]['temp']['day'];
 		var iconlinkarr = [];
 
 		for(let i = 0;i<7;i++){
 			var code = parsed_json['daily'][i]['weather']['0']['icon'];
 			iconlinkarr.push("http://openweathermap.org/img/wn/"+code+"@2x.png");
-			temparr.push(parsed_json['daily'][i]['temp']['day'])
+			temparr.push(parsed_json['daily'][i]['temp']['day']);
+			var date = new Date(parsed_json['daily'][i]['dt'] * 1000);
+			dayarr.push(date);
 		}
 
 
@@ -157,8 +196,10 @@ export default class Iphone extends Component {
             iconcode : icon,
 			vis : visibilty,
 			iconLinkDaily : iconlinkarr,
-			dtemparr : temparr
-        });      
+			dtemparr : temparr,
+			dayArray : dayarr,
+			temp : selectedTemp
+        });    
     }
 }
 
