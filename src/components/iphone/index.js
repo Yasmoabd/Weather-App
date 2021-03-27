@@ -9,6 +9,7 @@ import $ from 'jquery';
 import Button from '../button';
 import Datatable from './datatable';
 import Title from './title';
+import Settings from './settings';
 
 
 
@@ -19,11 +20,14 @@ export default class Iphone extends Component {
 	// a constructor with initial set states
 	constructor(props){
 		super(props);
+		let lat = this.props.lat;
+		let lon = this.props.lon;
+		this.setState({ lat: lat});
+		this.setState({ lon: lon});
 		this.fetchWeatherData();
-		// temperature state
 		this.state.temp = "";
-		// button display state
 		this.setState({ homeDisplay: true });
+		this.setState({ settings: false });
 		this.state.contextHeader = "Mountain Weather App";
 		this.state.selection = ""; 
 		this.setState({iconLinkDaily:["null","null","null","null","null","null","null"]});
@@ -33,6 +37,7 @@ export default class Iphone extends Component {
 		this.setState({selectedDay:0});
 	}
   
+	//gets the date selected from dropdown and find it in the date array in order to get the correct index
 	handleDropdownChange(e) {
 	  this.setState({ selectValue: e.target.value });
 	  var i;
@@ -44,12 +49,12 @@ export default class Iphone extends Component {
 	  }
 	  this.fetchWeatherData();
 	}
-		
+	// Latitudes range from -90 to 90, and longitudes range from -180 to 80
 
 	// a call to fetch weather data via wunderground
 	fetchWeatherData = () => {
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
-		var url = "https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=94.037689&units=metric&appid=652b23ab286647a7c9903391a74b4989";
+		var url = "https://api.openweathermap.org/data/2.5/onecall?lat="+this.state.lat+"&lon="+this.state.lon+"&units=metric&appid=652b23ab286647a7c9903391a74b4989";
 		$.ajax({
 			url: url,
 			dataType: "jsonp",
@@ -59,6 +64,7 @@ export default class Iphone extends Component {
 		// once the data grabbed, hide the button
 	}
 	
+	//following methods set the selection and change the header as well as setting home to false so other components can be rendered
 	ShowWindData = () => {
 		this.setState({selection: "wind"});
 		this.setState({ homeDisplay: false });
@@ -88,6 +94,11 @@ export default class Iphone extends Component {
 		this.setState({contextHeader: "SOS"});
 	}
 
+	ShowSettings = () =>{
+		this.setState({settings : true});
+	}
+
+	//returns a drop down with following seven days inside
 	DaySelector = () => {
 		var i;
 		let myarr = [];
@@ -111,11 +122,19 @@ export default class Iphone extends Component {
 
 	// the main render method for the iphone component
 	render() {
+
+		if(this.state.settings){
+			return(
+				<div><Settings/></div>
+			);
+		}
+		else{
 		var icon = "http://openweathermap.org/img/wn/" + this.state.iconcode + "@2x.png";
 		let DaySelector = this.DaySelector();
 		// add button conatiner
 		return (
 			<div class={ style.container }>
+				<div class={style.iconbuttonSettings}><button onClick={ this.ShowSettings }><img src='../../assets/icons/settings.png'/></button></div>
 				<div>{this.state.homeDisplay ? DaySelector : null}</div>
 				<div>{this.state.homeDisplay ? 
 				<table class={style.homeT}>
@@ -169,6 +188,7 @@ export default class Iphone extends Component {
 				</div>
 			</div>
 		);
+					}
 	}
 
 	parseResponse = (parsed_json) => {

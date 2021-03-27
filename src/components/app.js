@@ -4,6 +4,7 @@ import { h, Component } from 'preact';
 // import required Components from 'components/'
 import Iphone from './iphone';
 import Ipad from './ipad';
+import Settings from './iphone/settings'
 
 export default class App extends Component {
 //var App = React.createClass({
@@ -36,7 +37,7 @@ export default class App extends Component {
 		else {
 			return (
 				<div id="app">
-					<Iphone/ >
+					<Iphone lat={33.441792} lon={-94.037689}/ >
 				</div>
 			);
 		}
