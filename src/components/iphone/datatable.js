@@ -7,6 +7,10 @@ import Advice from './advice';
 export default class Datatable extends Component{
     constructor(props){
         super(props);
+        let lat = this.props.lat;
+		let lon = this.props.lon;
+		this.setState({ lat: lat});
+		this.setState({ lon: lon});
         this.setState({windspeedarr:["null","null","null","null","null","null","null"]});
         this.setState({winddegarr:["null","null","null","null","null","null","null"]});
         this.setState({precCloudarr:["null","null","null","null","null","null","null"]});
@@ -21,7 +25,7 @@ export default class Datatable extends Component{
 
     fetchWeatherData = () => {
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
-		var url = "https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=94.037689&units=metric&appid=652b23ab286647a7c9903391a74b4989";
+		var url = "https://api.openweathermap.org/data/2.5/onecall?lat="+this.state.lat+"&lon="+this.state.lon+"&units=metric&appid=652b23ab286647a7c9903391a74b4989";
 		$.ajax({
 			url: url,
 			dataType: "jsonp",
@@ -216,7 +220,7 @@ export default class Datatable extends Component{
                 }
             }
             else{
-                if(arr[i]<=-10){
+                if(arr[i]<=5){
                     warningList.push(this.dayConverter(i));
                 }
             }

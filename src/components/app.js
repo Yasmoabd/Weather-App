@@ -37,7 +37,7 @@ export default class App extends Component {
 		else {
 			return (
 				<div id="app">
-					<Iphone lat={33.441792} lon={-94.037689}/ >
+					<Iphone lat={53.0932} lon={3.8017}/ >
 				</div>
 			);
 		}

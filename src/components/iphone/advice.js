@@ -28,12 +28,6 @@ export default class Advice extends Component{
         return(
             <div>
                 <table class ={style.adviceTable}>
-                    <p>Hiking in strong winds are of high risk due to several reasons including: </p>
-                    <ol>
-                        <li>You may be thrown of balance when hiking in areas of high exposure</li>
-                        <li>It is more difficult to walk against strong wind which can tire you a lot easier</li>
-                        <li>Strong winds can make you feel colder than normal which can result in wind chill</li>
-                    </ol>
 
                     <b><h4>Recommended Resources :</h4></b>
                     <ul>
@@ -56,7 +50,7 @@ export default class Advice extends Component{
            <table class ={style.adviceTable}>
                     <p>Low Visibility is one of the worst-case hiking scenario and weather conditions can change quickly in high mountains.</p>
         
-                    <b><h4>How to deal with low invisibility :</h4></b>
+                    <b><p>How to deal with low invisibility :</p></b>
                     <ol>
                         <li><b>Appropriate Equipment - </b> It is important to have the right tools to help guide you in expected weather condtions. These tools can include: compass, waterproof map and reliable GPS.</li>
                         <li><b>Keep track of your position- </b> If you have a rough idea of your surroundings as you progress your journey, it would be a lot more useful when picturing your current location.</li>
@@ -77,10 +71,6 @@ export default class Advice extends Component{
         return(
             <div>
            <table class ={style.adviceTable}>
-                    <p>Mountain hiking in cold weather is just as enjoyable when you have the right equipment and preparation. Low temperatures are very much expected in high mountain ranges so it's important to be prepared. </p>
-
-                    <b>Some tips to prepare for low temperatures include: wear layers, avoid tight clothing, avoid cotton, keep batteries warm, apply sunscreen, cover all skin, pack warm drinks and add heat (e.g. hand warmers).</b>
-
                     <b><h4>Potential Cold-Related Issues to look out for: </h4></b>
                     <table class ={style.tempTable}>    
                     {/* creates a table for the health issues concerning cold weather */}
@@ -140,7 +130,6 @@ export default class Advice extends Component{
             // returns the page for when user seeks advice regarding strong winds under the 'Wind' section
             return(
             <div>
-                <div><h5>There are strong winds on <em>{warning}</em></h5></div>
                 {/* states which days there are strong winds using variable 'warning' */}
                 <div>{windAdvice}</div>
                 {/* returns makeWindAdvice function */}
@@ -157,7 +146,7 @@ export default class Advice extends Component{
             // returns page for when user clicks on Precipitation Advice to seek advice regarding low visibility
             return(
                 <div>
-                    <div><h5>There is low visibility on {warning}</h5></div>
+                 
                     {/* states which days there are low visibility using variable 'warning' */}
                     <div>{precAdvice}</div>
                     {/* returns makePrecAdvice function */}
@@ -173,7 +162,7 @@ export default class Advice extends Component{
             // returns page for when user seeks advice on cold weather 
             return(
                 <div>
-                    <div><h5>The temperature is low on {warning}</h5></div>
+                 
                       {/* states which days there are low temperatures using variable 'warning' */}
                     <div>{tempAdvice}</div>
                     {/* returns maketempAdvice function */}

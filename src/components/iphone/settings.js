@@ -3,37 +3,50 @@ import $ from 'jquery';
 import style from './style';
 import Button from '../button';
 import Iphone from './index';
-
+//57.0607° N, 3.6066° W cairgnomrs
+//54.7028° N, 2.4867° W pennines
+//54.1533° N, 6.0663° W mourne mounts
+//53.0932° N, 3.8017° W snowdonia
 export default class Settings extends Component{
     constructor(props){
         super(props);
         this.setState({Home: false});
         this.setState({setloc: false});
-        this.setState({latitude: 33.441792});
-        this.setState({longditude: -94.037689});
-        this.setState({error: false});
+        this.setState({latitude: 53.0932});
+        this.setState({longditude: 3.8017});
     }
 
-    setlocation = () =>{
-        var lat = document.getElementById('lat').value
-        var lon = document.getElementById('lon').value
-        
-        if(lat === "" || lon==="" || lat<-90 || lat>90 || lon<-180 || lon>80){
-            this.setState({error: true});
-            return;
-        }
-        this.setState({
-            latitude : lat,
-            longditude : lon,
-            setloc : true,
-            error: false
-        })
+    handleDropdownChanges = (e) => {
+        let val = e.target.value;
+        this.setlats(val);
+    }
+
+    setlats = (val) =>{
+        if(val==="1"){
+			this.setState({latitude: 57.0607});
+            this.setState({longditude: 3.6066});
+		}
+		else if(val==="2"){
+			this.setState({latitude:54.7028});
+            this.setState({longditude: 2.4867});
+		}
+		else if(val==="3"){
+			this.setState({latitude: 54.1533});
+            this.setState({longditude: -26.037689});
+		}
+		else{
+			this.setState({latitude: 53.0932});
+            this.setState({longditude: 3.8017});
+		}
+        console.log(val);
     }
 
     ShowHome = () =>{
-        if(this.state.error==false){
-            this.setState({Home:true});
-        }
+        this.setState({Home:true})
+    }
+
+    setlocation = () =>{
+        this.setState({setloc:true})
     }
 
 
@@ -43,15 +56,15 @@ export default class Settings extends Component{
                 <div class = {style.container}>
                     <h1>Settings</h1>
                     <h3>Set location:</h3>
-                    <label for="fname">Latitude -90 to 90:</label>
-                    <input type="text" id="lat" name="fname"></input><br/><br/>
-                    <label for="lname">Longditude -180 to 80:</label>
-                    <input type="text" id="lon" name="lname"></input><br/><br/>
+                    <select onChange={this.handleDropdownChanges}>
+                    <option value="4" selected>Choose location </option>
+					<option value="1">Cairngorms, Scotland</option>
+                    <option value="2">Pennines, England</option>
+                    <option value="3">Mourne Mountains, Northern Ireland</option>
+                    <option value="4">Snowdonia, Wales</option>
+                    </select>
                     <button onClick={ this.setlocation }>set location</button>
-                    <div>{this.state.setloc ? <p>Location set succesfully</p> : null}</div>
-                    <div>{this.state.error ? <p>Location invalid</p> : null}</div>
                     <div><button class={style.iconbutton} onClick={ this.ShowHome }><img src='../../assets/icons/home.png'/></button></div>
-                    
                 </div>
             );
         }

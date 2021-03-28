@@ -120,6 +120,22 @@ export default class Iphone extends Component {
 		);
 	}
 
+	getLocationHeader = () =>{
+		console.log(this.state.lat)
+		if(this.state.lat==57.0607){
+			return ("Cairngorms, Scotland");
+		}
+		else if(this.state.lat==54.7028){
+			return ("Pennines, England");
+		}
+		else if(this.state.lat==54.1533){
+			return ("Mourne Mountains, Northern Ireland");
+		}
+		else{
+			return("Snowdonia, Wales");
+		}
+	}
+
 	// the main render method for the iphone component
 	render() {
 
@@ -131,10 +147,12 @@ export default class Iphone extends Component {
 		else{
 		var icon = "http://openweathermap.org/img/wn/" + this.state.iconcode + "@2x.png";
 		let DaySelector = this.DaySelector();
+		let locationHeader = this.getLocationHeader();
 		// add button conatiner
 		return (
 			<div class={ style.container }>
 				<div class={style.iconbuttonSettings}><button onClick={ this.ShowSettings }><img src='../../assets/icons/settings.png'/></button></div>
+				<div class={style.locationHeader}>{this.state.homeDisplay ?locationHeader: null}</div>
 				<div>{this.state.homeDisplay ? DaySelector : null}</div>
 				<div>{this.state.homeDisplay ? 
 				<table class={style.homeT}>
@@ -158,33 +176,11 @@ export default class Iphone extends Component {
 						<tr><td><Button clickFunction={ this.ShowTemperatureData } message={"Temperature"} /></td></tr>
 						<tr><td><button class={style.iconbutton} onClick={ this.ShowSosData }><img src='../../assets/icons/emergency-call.png'/></button></td></tr>
 					</table>
-					 : <Datatable choice={this.state.selection}/> }
+					 : <Datatable choice={this.state.selection} lat={this.state.lat} lon={this.state.lon}/> }
 				</div>
 				<div>
 					{ this.state.homeDisplay ? 
-					<table class={style.iconTable}>
-						<tr>
-							<td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td><td>Sun</td>
-						</tr>
-						<tr>
-							<td><img src={this.state.iconLinkDaily[0]}/></td>
-							<td><img src={this.state.iconLinkDaily[1]}/></td>
-							<td><img src={this.state.iconLinkDaily[2]}/></td>
-							<td><img src={this.state.iconLinkDaily[3]}/></td>
-							<td><img src={this.state.iconLinkDaily[4]}/></td>
-							<td><img src={this.state.iconLinkDaily[5]}/></td>
-							<td><img src={this.state.iconLinkDaily[6]}/></td>
-						</tr>
-						<tr>
-							<td>{this.state.dtemparr[0]}</td>
-							<td>{this.state.dtemparr[1]}</td>
-							<td>{this.state.dtemparr[2]}</td>
-							<td>{this.state.dtemparr[3]}</td>
-							<td>{this.state.dtemparr[4]}</td>
-							<td>{this.state.dtemparr[5]}</td>
-							<td>{this.state.dtemparr[6]}</td>
-						</tr>
-					</table> : <button class={style.iconbutton} onClick={ this.ShowHome }><img src='../../assets/icons/home.png'/></button>}
+					null : <button class={style.iconbutton} onClick={ this.ShowHome }><img src='../../assets/icons/home.png'/></button>}
 				</div>
 			</div>
 		);
