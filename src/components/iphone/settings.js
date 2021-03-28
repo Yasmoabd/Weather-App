@@ -15,12 +15,12 @@ export default class Settings extends Component{
         this.setState({latitude: 53.0932});
         this.setState({longditude: 3.8017});
     }
-
+    //this method is called whrn a dropdown option is clicked
     handleDropdownChanges = (e) => {
         let val = e.target.value;
         this.setlats(val);
     }
-
+    //this sets the lat and lon depening on what option was chosen
     setlats = (val) =>{
         if(val==="1"){
 			this.setState({latitude: 57.0607});

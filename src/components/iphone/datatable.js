@@ -33,7 +33,7 @@ export default class Datatable extends Component{
 			error : function(req, err){ console.log('API call failed ' + err); }
 		})
     }
-
+    //following methods makes the table with the data inside
     makeWindTable = () => {
         return(
             <div>
@@ -176,11 +176,11 @@ export default class Datatable extends Component{
             </div>
         );
     }
-
+    //this method prints the data to pdf
     printdata = () =>{
         print();
     }
-
+    // this converts the day index to a string
     dayConverter = (index) =>{
         if(index==0){
             return "Mon ";
@@ -204,7 +204,7 @@ export default class Datatable extends Component{
             return "Sun ";
         }
     }
-
+    //this generates the weather warnings and adds them to an array
     windWarning = (choice,arr) =>{
         var warningList = [];
         var i;

@@ -49,7 +49,7 @@ export default class Iphone extends Component {
 	  }
 	  this.fetchWeatherData();
 	}
-	// Latitudes range from -90 to 90, and longitudes range from -180 to 80
+	
 
 	// a call to fetch weather data via wunderground
 	fetchWeatherData = () => {
@@ -119,7 +119,7 @@ export default class Iphone extends Component {
 			</div>
 		);
 	}
-
+	//returns the correct location depending on the latitude and lon
 	getLocationHeader = () =>{
 		console.log(this.state.lat)
 		if(this.state.lat==57.0607){
